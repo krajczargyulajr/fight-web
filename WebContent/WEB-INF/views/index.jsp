@@ -2,6 +2,7 @@
 <html>
 	<head>
 		<title>Fight - Ph03niXx</title>
+		<script type="text/javascript" src="./script/angular.js"></script>
 	</head>
 	
 	<body>
