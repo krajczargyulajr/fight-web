@@ -18,7 +18,7 @@
 	
 	<servlet-mapping>
 		<servlet-name>fight-web</servlet-name>
-		<url-pattern>/fight/*</url-pattern>
+		<url-pattern>/</url-pattern>
 	</servlet-mapping>
 
 	<context-param>
