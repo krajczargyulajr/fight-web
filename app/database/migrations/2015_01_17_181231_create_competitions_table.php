@@ -5,8 +5,6 @@ use Illuminate\Database\Migrations\Migration;
 
 class CreateCompetitionsTable extends Migration {
 
-	static $COMPETITION_TABLE_NAME = 'competitions';
-
 	/**
 	 * Run the migrations.
 	 *
@@ -14,7 +12,7 @@ class CreateCompetitionsTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create(self::$COMPETITION_TABLE_NAME, function($table) {
+		Schema::create(Competition::TABLE_NAME, function($table) {
 			$table->increments('id');
 			$table->string('name');
 			$table->string('description');
@@ -31,7 +29,7 @@ class CreateCompetitionsTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop(self::$COMPETITION_TABLE_NAME);
+		Schema::drop(Competition::TABLE_NAME);
 	}
 
 }
