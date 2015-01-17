@@ -21,8 +21,8 @@ class UsersTableSeeder extends Seeder {
 	public function run() {
 		DB::table('users')->delete();
 
-		User::create(array('email' => "adicica69satan@citromail.hu", 'password' => Hash::make("youmadfaggot"), 'isadmin' => 1, 'remember_token' => 100));
-		User::create(array('email' => "adicica70satan@citromail.hu", 'password' => Hash::make("youmadfaggot"), 'isadmin' => 0, 'remember_token' => 100));
+		User::create(array('id' => 1, 'email' => "adicica69satan@citromail.hu", 'password' => Hash::make("youmadfaggot"), 'isadmin' => 1, 'remember_token' => 100));
+		User::create(array('id' => 2, 'email' => "adicica70satan@citromail.hu", 'password' => Hash::make("youmadfaggot"), 'isadmin' => 0, 'remember_token' => 100));
 	}
 }
 
@@ -32,6 +32,7 @@ class CompetitionsTableSeeder extends Seeder {
 
 		Competition::create(
 			array(
+				'id' => 1,
 				'name' => "Bicske Kupa 2015", 
 				'description' => "Bicske Kupa 2015", 
 				'date' => "2015/04/11", 
