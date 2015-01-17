@@ -30,6 +30,15 @@ class CompetitionsTableSeeder extends Seeder {
 	public function run() {
 		DB::table('competitions')->delete();
 
-		Competition::create(array('name' => "Bicske Kupa 2015", 'description' => "Bicske Kupa 2015", 'date' => "2015/04/11", 'registration_deadline' => "2015/04/04", 'user_id' => 1));
+		Competition::create(
+			array(
+				'name' => "Bicske Kupa 2015", 
+				'description' => "Bicske Kupa 2015", 
+				'date' => "2015/04/11", 
+				'registration_deadline' => "2015/04/04", 
+				'user_id' => 1,
+				'ispublic' => 1
+			)
+		);
 	}
 }
