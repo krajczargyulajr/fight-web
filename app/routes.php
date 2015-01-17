@@ -30,6 +30,8 @@ Route::get('logout', array('uses' => 'HomeController@doLogout'));
 Route::get('competitions', 'CompetitionController@listCompetitions');
 Route::get('competition/new', 'CompetitionController@newCompetition');
 Route::post('competition/save', 'CompetitionController@saveCompetition');
+Route::post('competition/delete', 'CompetitionController@confirmDeleteCompetition');
+Route::get('competition/{id}/delete', 'CompetitionController@deleteCompetition');
 Route::get('competition/{id}/edit', 'CompetitionController@editCompetition');
 Route::get('competition/{id}', 'CompetitionController@showCompetition');
 
