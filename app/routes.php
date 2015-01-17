@@ -25,3 +25,11 @@ Route::post('login', array('uses' => 'HomeController@doLogin'));
 Route::get('first', array('uses' => 'HomeController@showFirst'));
 
 Route::get('logout', array('uses' => 'HomeController@doLogout'));
+
+// Competitions
+Route::get('competitions', 'CompetitionController@listCompetitions');
+Route::get('competition/new', 'CompetitionController@newCompetition');
+Route::post('competition/save', 'CompetitionController@saveCompetition');
+Route::get('competition/{id}/edit', 'CompetitionController@editCompetition');
+Route::get('competition/{id}', 'CompetitionController@showCompetition');
+
