@@ -22,8 +22,12 @@ class HomeController extends BaseController {
 	
 	public function showLogin()
 	{
-		// show the form
 		return View::make('login');
+	}
+	
+	public function showFirst()
+	{
+		return View::make('first');
 	}
 
 	public function doLogin()
@@ -58,7 +62,7 @@ class HomeController extends BaseController {
 				// return Redirect::to('secure');
 				// for now we'll just echo success (even though echoing in a controller is bad)
 				echo 'SUCCESS!';
-
+				return Redirect::to('first');
 			} else {        
 
 				// validation not successful, send back to form 
@@ -67,6 +71,12 @@ class HomeController extends BaseController {
 			}
 
 		}
+	}
+	
+	public function doLogout()
+	{
+		Auth::logout(); // log the user out of our application
+		return Redirect::to('login'); // redirect the user to the login screen
 	}
 
 }
