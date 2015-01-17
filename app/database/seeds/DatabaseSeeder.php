@@ -11,7 +11,15 @@ class DatabaseSeeder extends Seeder {
 	{
 		Eloquent::unguard();
 
-		// $this->call('UserTableSeeder');
+		$this->call('CompetitionsTableSeeder');
 	}
 
+}
+
+class CompetitionsTableSeeder extends Seeder {
+	public function run() {
+		DB::table('competitions')->delete();
+
+		Competition::create(array('name' => "Bicske Kupa 2015", 'description' => "Bicske Kupa 2015", 'date' => "2015/04/11", 'registration_deadline' => "2015/04/04"));
+	}
 }
