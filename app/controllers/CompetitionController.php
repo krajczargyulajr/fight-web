@@ -45,42 +45,7 @@ class CompetitionController extends BaseController {
 	public function deleteCompetition($id) {
 		$competition = Competition::findOrFail($id);
 
-		$confirmationKey = uniqid("c_");
-
-		$deleteCommand = new DeleteCommand();
-		$deleteCommand->type = "competition";
-		$deleteCommand->id = $id;
-		$deleteCommand->confirmation_key = $confirmationKey;
-
-		$deleteCommand->save();
-
-		$entity = array(
-			'id' => $competition->id,
-			'identifier_string' => $competition->name,
-			'cancel_target' => '/competitions'
-		);
-
-		return View::make('confirm_delete')->with('deleteCommand', $deleteCommand)->with('entity', $entity);
-	}
-
-	public function confirmDeleteCompetition() {
-		$type = Input::get('type');
-		$id = Input::get('entity_id');
-		$confirmationKey = Input::get('confirmation_key');
-
-		$deleteCommand = DeleteCommand::where('confirmation_key', '=', $confirmationKey)->firstOrFail();
-
-		if($id == $deleteCommand->id) {
-			$competition = Competition::findOrFail($id);
-
-			$competition->delete();
-
-			$deleteCommand->delete();
-		} else {
-			return "Competition id is: $id and deleteCommand id is :".$deleteCommand->id;
-		}
-
-		return Redirect::action('CompetitionController@listCompetitions');
+		return DeleteController::deleteEntity('competition', $id, $competition->name, '/competitions', '/competition/'.$id);
 	}
 	
 	public function showCompetition($id) {

@@ -11,5 +11,7 @@
 			<li><a href="/competition/{{ $competition->id }}">{{ $competition->name }}</a></li>
 		@endforeach
 		</ul>
+
+		<a href="/competition/new">Add new competition</a>
 	</body>
 </html>
