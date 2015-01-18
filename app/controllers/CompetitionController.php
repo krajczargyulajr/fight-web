@@ -9,13 +9,13 @@ class CompetitionController extends BaseController {
 	}
 
 	public function newCompetition() {
-		return View::make('competition.new');
+		return View::make('competition.edit')->with('isNew', 'true')->with('title', 'New')->with('competition', new Competition());
 	}
 
 	public function editCompetition($id) {
 		$competition = Competition::findOrFail($id);
 
-		return View::make('competition.edit', array('competition' => $competition));
+		return View::make('competition.edit', array('isNew' => 'false', 'title' => 'Edit', 'competition' => $competition));
 	}
 
 	public function saveCompetition() {

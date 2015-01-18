@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Edit Competition</title>
+		<title>{{ $title }} Competition</title>
 	</head>
 	<body>
-		<h1>Edit Competition</h1>
+		<h1>{{ $title }} Competition</h1>
 
 		{{ Form::open(array('action' => 'CompetitionController@saveCompetition')) }}
-			<input type="hidden" name="new" value="false" />
+			<input type="hidden" name="new" value="{{ $isNew }}" />
 			<input type="hidden" name="id" value="{{ $competition->id }}" />
 			<input type="text" name="name" placeholder="Competition Name" value="{{ $competition->name }}" />
 			<textarea name="description">{{ $competition->description }}</textarea>
