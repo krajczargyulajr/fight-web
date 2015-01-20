@@ -1,8 +1,14 @@
 <?php
 
+use Illuminate\Database\Eloquent\SoftDeletingTrait;
+
 class CompetitionEvent extends Eloquent { 
 
-	const TABLE_NAME = 'events';
+	use SoftDeletingTrait;
+
+	const TABLE_NAME = 'competition_events';
+
+	protected $dates = ['deleted_at'];
 }
 
 ?>
