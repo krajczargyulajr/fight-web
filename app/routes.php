@@ -30,8 +30,17 @@ Route::get('logout', array('uses' => 'HomeController@doLogout'));
 Route::get('competitions', 'CompetitionController@listCompetitions');
 Route::get('competition/new', 'CompetitionController@newCompetition');
 Route::post('competition/save', 'CompetitionController@saveCompetition');
+
+// Competition events
+Route::post('competition/{competitionId}/event/save', 'CompetitionEventController@saveEvent');
+Route::get('competition/{competitionId}/event/new', 'CompetitionEventController@newEvent');
+Route::get('competition/{competitionId}/event/{eventId}', 'CompetitionEventController@showEvent');
+Route::get('competition/{competitionId}/event/{eventId}/edit', 'CompetitionEventController@editEvent');
+Route::get('competition/{competitionId}/event/{eventId}/delete', 'CompetitionEventController@deleteCompetition');
+
 Route::get('competition/{id}/delete', 'CompetitionController@deleteCompetition');
 Route::get('competition/{id}/edit', 'CompetitionController@editCompetition');
 Route::get('competition/{id}', 'CompetitionController@showCompetition');
 
+// Delete
 Route::post('delete', 'DeleteController@confirmDelete');

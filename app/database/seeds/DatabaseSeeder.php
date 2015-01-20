@@ -13,6 +13,7 @@ class DatabaseSeeder extends Seeder {
 
 		$this->call('UsersTableSeeder');
 		$this->call('CompetitionsTableSeeder');
+		$this->call('EventsTableSeeder');
 	}
 
 }
@@ -28,7 +29,7 @@ class UsersTableSeeder extends Seeder {
 
 class CompetitionsTableSeeder extends Seeder {
 	public function run() {
-		DB::table('competitions')->delete();
+		DB::table(Competition::TABLE_NAME)->delete();
 
 		Competition::create(
 			array(
@@ -39,6 +40,52 @@ class CompetitionsTableSeeder extends Seeder {
 				'registration_deadline' => "2015/04/04", 
 				'user_id' => 1,
 				'ispublic' => 1
+			)
+		);
+	}
+}
+
+class EventsTableSeeder extends Seeder {
+	public function run() {
+		DB::table(CompetitionEvent::TABLE_NAME)->delete();
+
+		CompetitionEvent::create(
+			array(
+				'id' => 1,
+				'name' => 'Test Event 1',
+				'comments' => '',
+				'competition_id' => 1,
+				'index' => 1
+			)
+		);
+
+		CompetitionEvent::create(
+			array(
+				'id' => 2,
+				'name' => 'Test Event 2',
+				'comments' => '',
+				'competition_id' => 1,
+				'index' => 2
+			)
+		);
+
+		CompetitionEvent::create(
+			array(
+				'id' => 3,
+				'name' => 'Test Event 3',
+				'comments' => '',
+				'competition_id' => 1,
+				'index' => 3
+			)
+		);
+
+		CompetitionEvent::create(
+			array(
+				'id' => 4,
+				'name' => 'Test Event 4',
+				'comments' => '',
+				'competition_id' => 1,
+				'index' => 4
 			)
 		);
 	}

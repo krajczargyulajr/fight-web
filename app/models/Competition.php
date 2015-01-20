@@ -10,6 +10,9 @@ class Competition extends Eloquent {
 
 	protected $dates = ['deleted_at'];
 	
+	public function events() {
+		return $this->hasMany('CompetitionEvent', 'competition_id');
+	}
 }
 
 ?>
