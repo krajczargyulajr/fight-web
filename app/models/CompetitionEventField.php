@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Eloquent\SoftDeletingTrait;
 
-class CompetitionEventField {
+class CompetitionEventField extends Eloquent {
 
 	use SoftDeletingTrait;
 

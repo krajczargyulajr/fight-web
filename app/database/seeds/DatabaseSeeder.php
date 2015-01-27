@@ -14,6 +14,7 @@ class DatabaseSeeder extends Seeder {
 		$this->call('UsersTableSeeder');
 		$this->call('CompetitionsTableSeeder');
 		$this->call('EventsTableSeeder');
+		$this->call('EventFieldTableSeeder');
 	}
 
 }
@@ -86,6 +87,36 @@ class EventsTableSeeder extends Seeder {
 				'comments' => '',
 				'competition_id' => 1,
 				'index' => 4
+			)
+		);
+	}
+}
+
+class EventFieldTableSeeder extends Seeder {
+	public function run() {
+		DB::table(CompetitionEventField::TABLE_NAME)->delete();
+
+		CompetitionEventField::create(
+			array(
+				'id' => 1,
+				'name' => 'Sex',
+				'type' => 'String'
+			)
+		);
+
+		CompetitionEventField::create(
+			array(
+				'id' => 2,
+				'name' => 'Weight',
+				'type' => 'Double'
+			)
+		);
+
+		CompetitionEventField::create(
+			array(
+				'id' => 3,
+				'name' => 'Experience',
+				'type' => 'Integer'
 			)
 		);
 	}

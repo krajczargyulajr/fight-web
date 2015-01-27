@@ -26,6 +26,9 @@ Route::get('first', array('uses' => 'HomeController@showFirst'));
 
 Route::get('logout', array('uses' => 'HomeController@doLogout'));
 
+// Admin
+Route::get('admin', 'AdminController@home');
+
 // Competitions
 Route::get('competitions', 'CompetitionController@listCompetitions');
 Route::get('competition/new', 'CompetitionController@newCompetition');
@@ -41,6 +44,13 @@ Route::get('competition/{competitionId}/event/{eventId}/delete', 'CompetitionEve
 Route::get('competition/{id}/delete', 'CompetitionController@deleteCompetition');
 Route::get('competition/{id}/edit', 'CompetitionController@editCompetition');
 Route::get('competition/{id}', 'CompetitionController@showCompetition');
+
+Route::get('fields', 'CompetitionEventFieldController@listFields');
+Route::get('field/new', 'CompetitionEventFieldController@newField');
+Route::post('field/save', 'CompetitionEventFieldController@saveField');
+Route::get('field/{id}', 'CompetitionEventFieldController@showField');
+Route::get('field/{id}/edit', 'CompetitionEventFieldController@editField');
+Route::get('field/{id}/delete', 'CompetitionEventFieldController@deleteField');
 
 // Delete
 Route::post('delete', 'DeleteController@confirmDelete');

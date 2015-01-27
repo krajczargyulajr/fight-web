@@ -39,9 +39,12 @@ class DeleteController extends BaseController {
 			if($type == 'competition') {
 				$competition = Competition::findOrFail($id);
 				$competition->delete();
-			} else if{
+			} else if($type == 'competition_event') {
 				$event = CompetitionEvent::findOrFail($id);
 				$event->delete();
+			} else if('competition_event_field') {
+				$field = CompetitionEventField::findOrFail($id);
+				$field->delete();
 			} else {
 				return "Unknown entity type";
 			}
