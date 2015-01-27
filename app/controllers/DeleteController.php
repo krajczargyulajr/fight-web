@@ -42,16 +42,19 @@ class DeleteController extends BaseController {
 			} else if($type == 'competition_event') {
 				$event = CompetitionEvent::findOrFail($id);
 				$event->delete();
-			} else if('competition_event_field') {
+			} else if($type == 'competition_event_field') {
 				$field = CompetitionEventField::findOrFail($id);
 				$field->delete();
+			} else if($type == 'team') {
+				$team = Team::findOrFail($id);
+				$team->delete();
 			} else {
 				return "Unknown entity type";
 			}
 			
 			$deleteCommand->delete();
 		} else {
-			return "Competition id is: $id and deleteCommand id is :".$deleteCommand->id;
+			return "Id is: $id and deleteCommand id is :".$deleteCommand->id;
 		}
 
 		return Redirect::to($successTarget);

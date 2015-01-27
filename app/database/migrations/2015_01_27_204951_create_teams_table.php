@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddPredefinedValuesToEventFields extends Migration {
+class CreateTeamsTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,10 +12,10 @@ class AddPredefinedValuesToEventFields extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create(CompetitionEventFieldValue::TABLE_NAME, function($table) {
+		Schema::create(Team::TABLE_NAME, function($table) {
 			$table->increments('id');
-			$table->integer('field_id');
-			$table->string('value');
+			$table->string('name');
+			$table->string('description');
 			$table->timestamps();
 			$table->softDeletes();
 		});
@@ -28,7 +28,7 @@ class AddPredefinedValuesToEventFields extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop(CompetitionEventFieldValue::TABLE_NAME);
+		Schema::drop(Team::TABLE_NAME);
 	}
 
 }

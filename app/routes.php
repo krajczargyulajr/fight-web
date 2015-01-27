@@ -45,6 +45,7 @@ Route::get('event/{eventId}', 'CompetitionEventController@showEvent');
 Route::get('event/{eventId}/edit', 'CompetitionEventController@editEvent');
 Route::get('event/{eventId}/delete', 'CompetitionEventController@deleteCompetition');
 
+// Event fields
 Route::get('fields', 'CompetitionEventFieldController@listFields');
 Route::get('field/new', 'CompetitionEventFieldController@newField');
 Route::post('field/save', 'CompetitionEventFieldController@saveField');
@@ -53,7 +54,12 @@ Route::get('field/{id}/edit', 'CompetitionEventFieldController@editField');
 Route::get('field/{id}/delete', 'CompetitionEventFieldController@deleteField');
 
 // Teams
-
+Route::get('teams', 'TeamController@listTeams');
+Route::post('team/save', 'TeamController@saveTeam');
+Route::get('team/new', 'TeamController@newTeam');
+Route::get('team/{teamId}', 'TeamController@showTeam');
+Route::get('team/{teamId}/edit', 'TeamController@editTeam');
+Route::get('team/{teamId}/delete', 'TeamController@deleteTeam');
 
 // Delete
 Route::post('delete', 'DeleteController@confirmDelete');
