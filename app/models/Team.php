@@ -10,6 +10,9 @@ class Team extends Eloquent {
 
 	protected $dates = ['deleted_at'];
 	
+	public function people() {
+		return $this->hasMany('Person', 'teamId');
+	}
 }
 
 ?>

@@ -61,5 +61,13 @@ Route::get('team/{teamId}', 'TeamController@showTeam');
 Route::get('team/{teamId}/edit', 'TeamController@editTeam');
 Route::get('team/{teamId}/delete', 'TeamController@deleteTeam');
 
+// People
+
+Route::post('person/save', 'PersonController@savePerson');
+Route::get('person/new', 'PersonController@newPerson');
+Route::get('person/{personId}', 'PersonController@showPerson');
+Route::get('person/{personId}/edit', 'PersonController@editPerson');
+Route::get('person/{personId}/delete', 'PersonController@deletePerson');
+
 // Delete
 Route::post('delete', 'DeleteController@confirmDelete');
