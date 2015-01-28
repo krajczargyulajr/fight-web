@@ -26,48 +26,51 @@ Route::get('first', array('uses' => 'HomeController@showFirst'));
 
 Route::get('logout', array('uses' => 'HomeController@doLogout'));
 
-// Admin
-Route::get('admin', 'AdminController@home');
+Route::group(["before" => "auth"], function() {
+	// Admin
+	Route::get('admin', 'AdminController@home');
 
-// Competitions
-Route::get('competitions', 'CompetitionController@listCompetitions');
-Route::get('competition/new', 'CompetitionController@newCompetition');
-Route::post('competition/save', 'CompetitionController@saveCompetition');
+	// Competitions
+	Route::get('competitions', 'CompetitionController@listCompetitions');
+	Route::get('competition/new', 'CompetitionController@newCompetition');
+	Route::post('competition/save', 'CompetitionController@saveCompetition');
 
-Route::get('competition/{id}/delete', 'CompetitionController@deleteCompetition');
-Route::get('competition/{id}/edit', 'CompetitionController@editCompetition');
-Route::get('competition/{id}', 'CompetitionController@showCompetition');
+	Route::get('competition/{id}/delete', 'CompetitionController@deleteCompetition');
+	Route::get('competition/{id}/edit', 'CompetitionController@editCompetition');
+	Route::get('competition/{id}', 'CompetitionController@showCompetition');
 
-// Competition events
-Route::post('event/save', 'CompetitionEventController@saveEvent');
-Route::get('event/new', 'CompetitionEventController@newEvent');
-Route::get('event/{eventId}', 'CompetitionEventController@showEvent');
-Route::get('event/{eventId}/edit', 'CompetitionEventController@editEvent');
-Route::get('event/{eventId}/delete', 'CompetitionEventController@deleteCompetition');
+	// Competition events
+	Route::post('event/save', 'CompetitionEventController@saveEvent');
+	Route::get('event/new', 'CompetitionEventController@newEvent');
+	Route::get('event/{eventId}', 'CompetitionEventController@showEvent');
+	Route::get('event/{eventId}/edit', 'CompetitionEventController@editEvent');
+	Route::get('event/{eventId}/delete', 'CompetitionEventController@deleteCompetition');
 
-// Event fields
-Route::get('fields', 'CompetitionEventFieldController@listFields');
-Route::get('field/new', 'CompetitionEventFieldController@newField');
-Route::post('field/save', 'CompetitionEventFieldController@saveField');
-Route::get('field/{id}', 'CompetitionEventFieldController@showField');
-Route::get('field/{id}/edit', 'CompetitionEventFieldController@editField');
-Route::get('field/{id}/delete', 'CompetitionEventFieldController@deleteField');
+	// Event fields
+	Route::get('fields', 'CompetitionEventFieldController@listFields');
+	Route::get('field/new', 'CompetitionEventFieldController@newField');
+	Route::post('field/save', 'CompetitionEventFieldController@saveField');
+	Route::get('field/{id}', 'CompetitionEventFieldController@showField');
+	Route::get('field/{id}/edit', 'CompetitionEventFieldController@editField');
+	Route::get('field/{id}/delete', 'CompetitionEventFieldController@deleteField');
 
-// Teams
-Route::get('teams', 'TeamController@listTeams');
-Route::post('team/save', 'TeamController@saveTeam');
-Route::get('team/new', 'TeamController@newTeam');
-Route::get('team/{teamId}', 'TeamController@showTeam');
-Route::get('team/{teamId}/edit', 'TeamController@editTeam');
-Route::get('team/{teamId}/delete', 'TeamController@deleteTeam');
+	// Teams
+	Route::get('teams', 'TeamController@listTeams');
+	Route::post('team/save', 'TeamController@saveTeam');
+	Route::get('team/new', 'TeamController@newTeam');
+	Route::get('team/{teamId}', 'TeamController@showTeam');
+	Route::get('team/{teamId}/edit', 'TeamController@editTeam');
+	Route::get('team/{teamId}/delete', 'TeamController@deleteTeam');
 
-// People
+	// People
 
-Route::post('person/save', 'PersonController@savePerson');
-Route::get('person/new', 'PersonController@newPerson');
-Route::get('person/{personId}', 'PersonController@showPerson');
-Route::get('person/{personId}/edit', 'PersonController@editPerson');
-Route::get('person/{personId}/delete', 'PersonController@deletePerson');
+	Route::post('person/save', 'PersonController@savePerson');
+	Route::get('person/new', 'PersonController@newPerson');
+	Route::get('person/{personId}', 'PersonController@showPerson');
+	Route::get('person/{personId}/edit', 'PersonController@editPerson');
+	Route::get('person/{personId}/delete', 'PersonController@deletePerson');
 
-// Delete
-Route::post('delete', 'DeleteController@confirmDelete');
+	// Delete
+	Route::post('delete', 'DeleteController@confirmDelete');
+
+});
