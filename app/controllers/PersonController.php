@@ -10,6 +10,9 @@ class PersonController extends BaseController {
 
 	public function newPerson() {
 		$teamId = Input::get('teamId');
+
+		$team = Team::findOrFail($teamId);
+
 		$person = new Person();
 		$person->teamId = $teamId;
 
