@@ -13,6 +13,14 @@ class Person extends Eloquent {
 	public function fullName() {
 		return $this->firstname." ".$this->lastname;
 	}
+
+	public function eventRegistrations() {
+		return $this->hasMany('PersonEventRegistration', 'person_id');
+	}
+
+	public function eventRegistrationFor($event_id) {
+		return $this->eventRegistrations()->where('event_id', '=', $event_id)->count() > 0;
+	}
 	
 }
 

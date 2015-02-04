@@ -15,6 +15,9 @@ class DatabaseSeeder extends Seeder {
 		$this->call('CompetitionsTableSeeder');
 		$this->call('EventsTableSeeder');
 		$this->call('EventFieldTableSeeder');
+		$this->call('TeamsTableSeeder');
+		$this->call('PeopleTableSeeder');
+		$this->call('PersonEventRegistrationsTableSeeder');
 	}
 
 }
@@ -99,14 +102,6 @@ class EventFieldTableSeeder extends Seeder {
 		CompetitionEventField::create(
 			array(
 				'id' => 1,
-				'name' => 'Sex',
-				'type' => 'String'
-			)
-		);
-
-		CompetitionEventField::create(
-			array(
-				'id' => 2,
 				'name' => 'Weight',
 				'type' => 'Double'
 			)
@@ -114,9 +109,66 @@ class EventFieldTableSeeder extends Seeder {
 
 		CompetitionEventField::create(
 			array(
-				'id' => 3,
+				'id' => 2,
 				'name' => 'Experience',
 				'type' => 'Integer'
+			)
+		);
+	}
+}
+
+class TeamsTableSeeder extends Seeder {
+	public function run() {
+		DB::table(Team::TABLE_NAME)->delete();
+
+		Team::create(
+			array(
+				'id' => 1,
+				'name' => 'DHKSE',
+				'description' => '',
+				'user_id' => 1,
+				'competition_id' => 0
+			)
+		);
+
+		Team::create(
+			array(
+				'id' => 2,
+				'name' => 'DHKSE',
+				'description' => '',
+				'user_id' => 1,
+				'competition_id' => 1
+			)
+		);
+	}
+}
+
+class PeopleTableSeeder extends Seeder {
+	public function run() {
+		DB::table(Person::TABLE_NAME)->delete();
+
+		Person::create(
+			array(
+				'id' => 1,
+				'teamId' => 2,
+				'firstname' => 'Gyula',
+				'lastname' => 'Krajczar',
+				'birthday' => '1987/01/28',
+				'sex' => 'Male'
+			)
+		);
+	}
+}
+
+class PersonEventRegistrationsTableSeeder extends Seeder {
+	public function run() {
+		DB::table(PersonEventRegistration::TABLE_NAME)->delete();
+
+		PersonEventRegistration::create(
+			array(
+				'id' => 1,
+				'person_id' => 1,
+				'event_id' => 3
 			)
 		);
 	}
