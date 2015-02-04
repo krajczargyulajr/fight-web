@@ -61,8 +61,8 @@ class HomeController extends BaseController {
 				// redirect them to the secure section or whatever
 				// return Redirect::to('secure');
 				// for now we'll just echo success (even though echoing in a controller is bad)
-				return Redirect::intended('first');
-			} else {        
+				return Redirect::action('RegistrationController@show');
+			} else {
 
 				// validation not successful, send back to form 
 				return Redirect::to('login');

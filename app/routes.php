@@ -30,6 +30,10 @@ Route::group(["before" => "auth"], function() {
 	// Admin
 	Route::get('admin', 'AdminController@home');
 
+	// Registration
+
+	Route::get('registration', 'RegistrationController@show');
+
 	// Competitions
 	Route::get('competitions', 'CompetitionController@listCompetitions');
 	Route::get('competition/new', 'CompetitionController@newCompetition');
