@@ -1,16 +1,18 @@
-<!DOCTYPE html>
-<html>
-	<head>
-		<title>{{ $person->fullName() }}</title>
-	</head>
 
-	<body>
-		<h2>{{ $person->fullName() }}</h2>
+@extends('layouts.master')
 
-		<div>Birthday: {{ $person->birthday }}</div>
-		<div>Sex: {{ $person->sex }}</div>
+@section('title')
+{{ $person->fullName() }}
+@stop
 
-		<a href="/person/{{ $person->id }}/edit">Edit</a>
-		<a href="/person/{{ $person->id }}/delete">Delete</a>
-	</body>
-</html>
+@section('content')
+
+<h2>{{ $person->fullName() }}</h2>
+
+<div>Birthday: {{ $person->birthday }}</div>
+<div>Sex: {{ $person->sex }}</div>
+
+<a href="/person/{{ $person->id }}/edit">Edit</a>
+<a href="/person/{{ $person->id }}/delete">Delete</a>
+
+@stop

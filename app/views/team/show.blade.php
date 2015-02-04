@@ -1,25 +1,27 @@
-<!DOCTYPE html>
-<html>
-	<head>
-		<title>{{ $team->name }}</title>
-	</head>
 
-	<body>
-		<h2>{{ $team->name }}</h2>
+@extends('layouts.master')
 
-		<div>{{ $team->description }}</div>
+@section('title')
+{{ $team->name }}
+@stop
 
-		<ul>
-		@foreach($team->people as $person)
-			<li><a href="/person/{{ $person->id }}">{{ $person->fullName() }}</a></li>
-		@endforeach
-		</ul>
+@section('content')
 
-		<a href="/person/new?teamId={{ $team->id }}">New Person</a>
+<h2>{{ $team->name }}</h2>
 
-		<br />
+<div>{{ $team->description }}</div>
 
-		<a href="/team/{{ $team->id }}/edit">Edit</a>
-		<a href="/team/{{ $team->id }}/delete">Delete</a>
-	</body>
-</html>
+<ul>
+@foreach($team->people as $person)
+	<li><a href="/person/{{ $person->id }}">{{ $person->fullName() }}</a></li>
+@endforeach
+</ul>
+
+<a href="/person/new?teamId={{ $team->id }}">New Person</a>
+
+<br />
+
+<a href="/team/{{ $team->id }}/edit">Edit</a>
+<a href="/team/{{ $team->id }}/delete">Delete</a>
+
+@stop
