@@ -11,6 +11,6 @@
 
 		{{ $event->comments }}
 
-		<a href="/competition/{{ $competition->id }}/event/{{ $event->id }}/edit">Edit</a>
-		<a href="/competition/{{ $competition->id }}/event/{{ $event->id }}/delete">Delete</a>
+		<a href="/event/{{ $event->id }}/edit">Edit</a>
+		<a href="/event/{{ $event->id }}/delete">Delete</a>
 @stop
