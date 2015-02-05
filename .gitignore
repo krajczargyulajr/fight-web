@@ -3,3 +3,9 @@ build/
 target/
 vendor/
 bootstrap/compiled.php
+
+fight-web.sublime-project
+
+fight-web.sublime-workspace
+
+bootstrap/compiled.php

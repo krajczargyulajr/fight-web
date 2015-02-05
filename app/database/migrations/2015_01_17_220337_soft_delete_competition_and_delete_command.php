@@ -12,10 +12,6 @@ class SoftDeleteCompetitionAndDeleteCommand extends Migration {
 	 */
 	public function up()
 	{
-		Schema::table(Competition::TABLE_NAME, function($table) {
-			$table->softDeletes();
-		});
-
 		Schema::create(DeleteCommand::TABLE_NAME, function($table) {
 			$table->integer('id');
 			$table->string('type');
@@ -31,10 +27,6 @@ class SoftDeleteCompetitionAndDeleteCommand extends Migration {
 	 */
 	public function down()
 	{
-		Schema::table(Competition::TABLE_NAME, function($table) {
-			$table->dropColumn('deleted_at');
-		});
-
 		Schema::drop(DeleteCommand::TABLE_NAME);
 	}
 

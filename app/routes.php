@@ -22,8 +22,6 @@ Route::get('login', array('uses' => 'HomeController@showLogin'));
 // route to process the form
 Route::post('login', array('uses' => 'HomeController@doLogin'));
 
-Route::get('first', array('uses' => 'HomeController@showFirst'));
-
 Route::get('logout', array('uses' => 'HomeController@doLogout'));
 
 Route::group(["before" => "auth"], function() {
@@ -34,29 +32,12 @@ Route::group(["before" => "auth"], function() {
 
 	Route::get('registration', 'RegistrationController@show');
 
-	// Competitions
-	Route::get('competitions', 'CompetitionController@listCompetitions');
-	Route::get('competition/new', 'CompetitionController@newCompetition');
-	Route::post('competition/save', 'CompetitionController@saveCompetition');
-
-	Route::get('competition/{id}/delete', 'CompetitionController@deleteCompetition');
-	Route::get('competition/{id}/edit', 'CompetitionController@editCompetition');
-	Route::get('competition/{id}', 'CompetitionController@showCompetition');
-
 	// Competition events
 	Route::post('event/save', 'CompetitionEventController@saveEvent');
 	Route::get('event/new', 'CompetitionEventController@newEvent');
 	Route::get('event/{eventId}', 'CompetitionEventController@showEvent');
 	Route::get('event/{eventId}/edit', 'CompetitionEventController@editEvent');
 	Route::get('event/{eventId}/delete', 'CompetitionEventController@deleteCompetition');
-
-	// Event fields
-	Route::get('fields', 'CompetitionEventFieldController@listFields');
-	Route::get('field/new', 'CompetitionEventFieldController@newField');
-	Route::post('field/save', 'CompetitionEventFieldController@saveField');
-	Route::get('field/{id}', 'CompetitionEventFieldController@showField');
-	Route::get('field/{id}/edit', 'CompetitionEventFieldController@editField');
-	Route::get('field/{id}/delete', 'CompetitionEventFieldController@deleteField');
 
 	// Teams
 	Route::get('teams', 'TeamController@listTeams');
@@ -67,7 +48,6 @@ Route::group(["before" => "auth"], function() {
 	Route::get('team/{teamId}/delete', 'TeamController@deleteTeam');
 
 	// People
-
 	Route::post('person/save', 'PersonController@savePerson');
 	Route::get('person/new', 'PersonController@newPerson');
 	Route::get('person/{personId}', 'PersonController@showPerson');

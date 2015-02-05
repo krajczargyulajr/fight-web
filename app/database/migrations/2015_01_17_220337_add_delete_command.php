@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateEventFieldTable extends Migration {
+class SoftDeleteCompetitionAndDeleteCommand extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,12 +12,11 @@ class CreateEventFieldTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create(CompetitionEventField::TABLE_NAME, function($table) {
-			$table->increments('id');
-			$table->string('name');
+		Schema::create(DeleteCommand::TABLE_NAME, function($table) {
+			$table->integer('id');
 			$table->string('type');
+			$table->string('confirmation_key')->unique();
 			$table->timestamps();
-			$table->softDeletes();
 		});
 	}
 
@@ -28,7 +27,7 @@ class CreateEventFieldTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop(CompetitionEventField::TABLE_NAME);
+		Schema::drop(DeleteCommand::TABLE_NAME);
 	}
 
 }
