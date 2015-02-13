@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="hu">
 	<head>
 		<title>
 		@section('title')
@@ -10,10 +10,24 @@
 			display: none;
 		}
 		</style>
+
+		<link rel="stylesheet" href="/assets/stylesheets/application.css" />
+
+		<script src="/assets/javascripts/application.js"></script>
 	</head>
 	<body>
-		@include('user_block')
-		<h1></h1>
+		<nav class="navbar navbar-default">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="#">Bicske Kupa 2015 {{{ Lang::get('registration.subtitle') }}}</a>
+			</div>
+
+			<div class="collapse navbar-collapse">
+				<ul class="nav navbar-nav navbar-right">
+					@include('user_block')
+				</ul>
+			</div><!-- navbar-collapse -->
+		</nav>
+
 		@yield('content')
-		</body>
+	</body>
 </html>

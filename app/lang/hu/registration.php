@@ -1,11 +1,13 @@
 <?php
 
 return array(
-	'lastname' => "Vezeteknev",
-	'firstname' => "Keresztnev",
+	'lastname' => "Vezetéknév",
+	'firstname' => "Keresztnév",
 	'sex' => "Nem",
-	'birthday' => "Szuletesnap",
-	'experience' => "Szint"
+	'birthday' => "Szuletési dátum",
+	'experience' => "Szint",
+
+	'subtitle' => "Regisztráció"
 
 );
 
