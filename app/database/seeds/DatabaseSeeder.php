@@ -12,9 +12,7 @@ class DatabaseSeeder extends Seeder {
 		Eloquent::unguard();
 
 		$this->call('UsersTableSeeder');
-		$this->call('CompetitionsTableSeeder');
 		$this->call('EventsTableSeeder');
-		$this->call('EventFieldTableSeeder');
 		$this->call('TeamsTableSeeder');
 		$this->call('PeopleTableSeeder');
 		$this->call('PersonEventRegistrationsTableSeeder');
@@ -26,26 +24,9 @@ class UsersTableSeeder extends Seeder {
 	public function run() {
 		DB::table('users')->delete();
 
-		User::create(array('id' => 1, 'email' => "adicica69satan@citromail.hu", 'password' => Hash::make("youmadfaggot"), 'isadmin' => 1, 'remember_token' => 100));
-		User::create(array('id' => 2, 'email' => "adicica70satan@citromail.hu", 'password' => Hash::make("youmadfaggot"), 'isadmin' => 0, 'remember_token' => 100));
-	}
-}
-
-class CompetitionsTableSeeder extends Seeder {
-	public function run() {
-		DB::table(Competition::TABLE_NAME)->delete();
-
-		Competition::create(
-			array(
-				'id' => 1,
-				'name' => "Bicske Kupa 2015", 
-				'description' => "Bicske Kupa 2015", 
-				'date' => "2015/04/11", 
-				'registration_deadline' => "2015/04/04", 
-				'user_id' => 1,
-				'ispublic' => 1
-			)
-		);
+		User::create(array('id' => 1, 'email' => "gyula.krajczar@gmail.com", 'password' => Hash::make("adminpass"), 'remember_token' => 100));
+		User::create(array('id' => 2, 'email' => "testuser1@example.com", 'password' => Hash::make("testpassword1"), 'remember_token' => 100));
+		User::create(array('id' => 3, 'email' => "testuser2@example.com", 'password' => Hash::make("testpassword2"), 'remember_token' => 100));
 	}
 }
 
@@ -58,7 +39,6 @@ class EventsTableSeeder extends Seeder {
 				'id' => 1,
 				'name' => 'Test Event 1',
 				'comments' => '',
-				'competition_id' => 1,
 				'index' => 1
 			)
 		);
@@ -68,7 +48,6 @@ class EventsTableSeeder extends Seeder {
 				'id' => 2,
 				'name' => 'Test Event 2',
 				'comments' => '',
-				'competition_id' => 1,
 				'index' => 2
 			)
 		);
@@ -78,7 +57,6 @@ class EventsTableSeeder extends Seeder {
 				'id' => 3,
 				'name' => 'Test Event 3',
 				'comments' => '',
-				'competition_id' => 1,
 				'index' => 3
 			)
 		);
@@ -88,30 +66,7 @@ class EventsTableSeeder extends Seeder {
 				'id' => 4,
 				'name' => 'Test Event 4',
 				'comments' => '',
-				'competition_id' => 1,
 				'index' => 4
-			)
-		);
-	}
-}
-
-class EventFieldTableSeeder extends Seeder {
-	public function run() {
-		DB::table(CompetitionEventField::TABLE_NAME)->delete();
-
-		CompetitionEventField::create(
-			array(
-				'id' => 1,
-				'name' => 'Weight',
-				'type' => 'Double'
-			)
-		);
-
-		CompetitionEventField::create(
-			array(
-				'id' => 2,
-				'name' => 'Experience',
-				'type' => 'Integer'
 			)
 		);
 	}
@@ -126,8 +81,7 @@ class TeamsTableSeeder extends Seeder {
 				'id' => 1,
 				'name' => 'DHKSE',
 				'description' => '',
-				'user_id' => 1,
-				'competition_id' => 0
+				'user_id' => 2,
 			)
 		);
 
@@ -136,8 +90,7 @@ class TeamsTableSeeder extends Seeder {
 				'id' => 2,
 				'name' => 'DHKSE',
 				'description' => '',
-				'user_id' => 1,
-				'competition_id' => 1
+				'user_id' => 3,
 			)
 		);
 	}
@@ -150,7 +103,7 @@ class PeopleTableSeeder extends Seeder {
 		Person::create(
 			array(
 				'id' => 1,
-				'teamId' => 2,
+				'team_id' => 2,
 				'firstname' => 'Gyula',
 				'lastname' => 'Krajczar',
 				'birthday' => '1987/01/28',

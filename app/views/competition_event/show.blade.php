@@ -2,7 +2,7 @@
 @extends('layouts.master')
 
 @section('title')
-{{ $event->name }} - {{ $competition->name }}
+{{ $event->name }} - Bicske Kupa
 @stop
 
 @section('content')

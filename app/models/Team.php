@@ -11,7 +11,7 @@ class Team extends Eloquent {
 	protected $dates = ['deleted_at'];
 	
 	public function people() {
-		return $this->hasMany('Person', 'teamId');
+		return $this->hasMany('Person', 'team_id');
 	}
 }
 

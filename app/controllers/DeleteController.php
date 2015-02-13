@@ -36,18 +36,9 @@ class DeleteController extends BaseController {
 		$deleteCommand = DeleteCommand::where('confirmation_key', '=', $confirmationKey)->firstOrFail();
 
 		if($id == $deleteCommand->id) {
-			if($type == 'competition') {
-				$competition = Competition::findOrFail($id);
-				$competition->delete();
-			} else if($type == 'competition_event') {
-				$event = CompetitionEvent::findOrFail($id);
-				$event->delete();
-			} else if($type == 'competition_event_field') {
-				$field = CompetitionEventField::findOrFail($id);
-				$field->delete();
-			} else if($type == 'team') {
-				$team = Team::findOrFail($id);
-				$team->delete();
+			if($type == 'person') {
+				$person = Person::findOrFail($id);
+				$person->delete();
 			} else {
 				return "Unknown entity type";
 			}

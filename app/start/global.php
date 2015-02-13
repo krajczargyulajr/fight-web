@@ -82,3 +82,9 @@ App::down(function()
 require app_path().'/filters.php';
 
 require app_path().'/view_composers.php';
+
+require app_path().'/IterableValidator.php';
+
+Validator::resolver(function($translator, $data, $rules, $messages) {
+	return new ValidationIterator($translator, $data, $rules, $messages);
+});

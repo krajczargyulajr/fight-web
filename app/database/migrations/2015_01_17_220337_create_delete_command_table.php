@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class SoftDeleteCompetitionAndDeleteCommand extends Migration {
+class CreateDeleteCommandTable extends Migration {
 
 	/**
 	 * Run the migrations.

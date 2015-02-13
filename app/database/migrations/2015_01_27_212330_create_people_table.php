@@ -14,11 +14,12 @@ class CreatePeopleTable extends Migration {
 	{
 		Schema::create(Person::TABLE_NAME, function($table) {
 			$table->increments('id');
-			$table->integer('teamId');
+			$table->integer('team_id');
 			$table->string('firstname');
 			$table->string('lastname');
 			$table->date('birthday');
 			$table->string('sex');
+			$table->string('experience');
 			$table->timestamps();
 			$table->softDeletes();
 		});

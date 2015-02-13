@@ -3,10 +3,8 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddIdUserTable extends Migration {
+class CreatePersonEventRegistrationTable extends Migration {
 
-
-	static $USER_TABLE_NAME = 'users';
 	/**
 	 * Run the migrations.
 	 *
@@ -14,8 +12,12 @@ class AddIdUserTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::table(self::$USER_TABLE_NAME, function($table) {
+		Schema::create(PersonEventRegistration::TABLE_NAME, function($table) {
 			$table->increments('id');
+			$table->integer('person_id');
+			$table->integer('event_id');
+			$table->timestamps();
+			$table->softDeletes();
 		});
 	}
 
@@ -26,10 +28,7 @@ class AddIdUserTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::table(self::$USER_TABLE_NAME, function($table)
-		{
-			$table->dropColumn('id');
-		});
+		Schema::drop(PersonEventRegistration::TABLE_NAME);
 	}
 
 }

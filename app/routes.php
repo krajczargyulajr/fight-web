@@ -11,27 +11,31 @@
 |
 */
 
-Route::get('/', function()
-{
-	return View::make('hello');
-});
 
 // route to show the login form
-Route::get('login', array('uses' => 'HomeController@showLogin'));
+Route::get('login', array('uses' => 'AuthController@showLogin'));
 
 // route to process the form
-Route::post('login', array('uses' => 'HomeController@doLogin'));
+Route::post('login', array('uses' => 'AuthController@doLogin'));
 
-Route::get('logout', array('uses' => 'HomeController@doLogout'));
+Route::get('logout', array('uses' => 'AuthController@doLogout'));
 
 Route::group(["before" => "auth"], function() {
+
+	Route::get('/', function()
+	{
+		return Redirect::action('RegistrationController@show');
+	});
+
 	// Admin
 	Route::get('admin', 'AdminController@home');
 
 	// Registration
 
 	Route::get('registration', 'RegistrationController@show');
+	Route::post('registration/save', 'RegistrationController@update');
 
+	/*
 	// Competition events
 	Route::post('event/save', 'CompetitionEventController@saveEvent');
 	Route::get('event/new', 'CompetitionEventController@newEvent');
@@ -53,6 +57,7 @@ Route::group(["before" => "auth"], function() {
 	Route::get('person/{personId}', 'PersonController@showPerson');
 	Route::get('person/{personId}/edit', 'PersonController@editPerson');
 	Route::get('person/{personId}/delete', 'PersonController@deletePerson');
+	*/
 
 	// Delete
 	Route::post('delete', 'DeleteController@confirmDelete');

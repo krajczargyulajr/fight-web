@@ -17,8 +17,9 @@ class CreateEventsTable extends Migration {
 			$table->increments('id');
 			$table->string('name');
 			$table->string('comments')->nullable();
-			$table->integer('competition_id');
 			$table->integer('index');
+			$table->timestamps();
+			$table->softDeletes();
 		});
 	}
 

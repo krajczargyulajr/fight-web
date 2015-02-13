@@ -14,6 +14,7 @@ class CreateTeamsTable extends Migration {
 	{
 		Schema::create(Team::TABLE_NAME, function($table) {
 			$table->increments('id');
+			$table->integer('user_id');
 			$table->string('name');
 			$table->string('description');
 			$table->timestamps();

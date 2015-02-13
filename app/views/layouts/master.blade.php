@@ -5,7 +5,12 @@
 		@section('title')
 		@show
 		</title>
-		</head>
+		<style type="text/css">
+		p.field_error {
+			display: none;
+		}
+		</style>
+	</head>
 	<body>
 		@include('user_block')
 		<h1></h1>
