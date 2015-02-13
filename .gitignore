@@ -1,8 +1,10 @@
 .settings/
+.sass-cache/
 build/
 target/
 vendor/
 bootstrap/compiled.php
+bower-components/
 
 fight-web.sublime-project
 
