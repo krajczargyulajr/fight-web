@@ -15,11 +15,11 @@ Register for {{ $title }}
 	<thead>
 		<tr>
 			<th>&nbsp;</th>
-			<th>Lastname</th>
-			<th>Firstname</th>
-			<th>Sex</th>
-			<th>Birthday</th>
-			<th>Experience</th>
+			<th>{{{ Lang::get('registration.lastname') }}}</th>
+			<th>{{{ Lang::get('registration.firstname') }}}</th>
+			<th>{{{ Lang::get('registration.sex') }}}</th>
+			<th>{{{ Lang::get('registration.birthday') }}}</th>
+			<th>{{{ Lang::get('registration.experience') }}}</th>
 			@foreach($events as $event)
 			<th>{{{ $event->name }}}</th>
 			@endforeach
@@ -30,7 +30,7 @@ Register for {{ $title }}
 		<tr>
 			<input type="hidden" name="people[{{{ $i }}}][id]" value="{{{ $person->id }}}" />
 			<input type="hidden" name="people[{{{ $i }}}][index]" value="{{{ $i }}}" />
-			<td><button name="updateAction" type="submit" value="deletePerson_{{{ $person->id }}}">Delete</button>
+			<td><button name="updateAction" type="submit" value="deletePerson_{{{ $person->id }}}">{{{ Lang::get('form_action.delete') }}}</button>
 			<td>
 				<input type="text" name="people[{{{ $i }}}][lastname]" value="{{{ $person->lastname }}}" />
 				@foreach($person->getFieldErrors('lastname') as $err)
@@ -71,8 +71,8 @@ Register for {{ $title }}
 </table>
 
 <input type="hidden" name="team_id" value="{{ $team->id }}" />
-<button name="updateAction" type="submit" value="save">Save</button>
-<button name="updateAction" type="submit" value="save_add">Save and Add new person</button>
+<button name="updateAction" type="submit" value="save">{{{ Lang::get('form_action.save') }}}</button>
+<button name="updateAction" type="submit" value="save_add">{{{ Lang::get('form_action.save_and_add_person') }}}</button>
 
 {{ Form::close() }}
 

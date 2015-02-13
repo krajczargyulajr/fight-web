@@ -2,11 +2,11 @@
 @extends('layouts.master')
 
 @section('title')
-Login
+{{{ Lang::get('login.login') }}}
 @stop
 
 @section('content')
-<h2>Login</h2>
+<h2>{{{ Lang::get('login.login') }}}</h2>
 
 {{ Form::open(array('url' => 'login')) }}
 
@@ -18,16 +18,16 @@ Login
 </p>
 
 <p>
-	{{ Form::label('email', 'Email Address') }}
+	{{ Form::label('email', Lang::get('login.email_address')) }}
 	{{ Form::text('email', Input::old('email'), array('placeholder' => 'awesome@awesome.com')) }}
 </p>
 
 <p>
-	{{ Form::label('password', 'Password') }}
+	{{ Form::label('password', Lang::get('login.password')) }}
 	{{ Form::password('password') }}
 </p>
 
-<p>{{ Form::submit('Submit!') }}</p>
+<p>{{ Form::submit(Lang::get('login.login')) }}</p>
 {{ Form::close() }}
 
 @stop
