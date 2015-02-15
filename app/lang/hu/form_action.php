@@ -2,9 +2,10 @@
 
 return array(
 	'save' => "Mentés",
-	'save_and_add_person' => "Mentés és új versenyző hozzáadása",
+	'add_person' => "Új versenyző hozzáadása",
 	'delete' => 'Törlés',
-	'finalize' => 'Véglegesít'
+	'finalize' => 'Véglegesít',
+	'team_name_placeholder' => 'Csapatnév'
 );
 
 ?>

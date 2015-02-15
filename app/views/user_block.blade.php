@@ -1,5 +1,6 @@
+<!-- TODO: add warning when clicking "Login" to make sure no user data is lost -->
 @if (Auth::guest())
-	<li><a href="/login">{{{ Lang::get('login.login') }}}</a></li>
+	<li><a href="/">{{{ Lang::get('login.login') }}}</a></li>
 @else
 	<li class="dropdown">
 		<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">

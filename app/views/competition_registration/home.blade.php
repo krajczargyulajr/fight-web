@@ -11,8 +11,11 @@ Register for {{ $title }}
 
 {{ Form::open(array('action' => 'RegistrationController@update', 'method' => 'post'))}}
 
+<input type="hidden" name="team[id]" value="{{{ $team->id }}}" />
+<input type="hidden" name="team[user_id]" value="{{{ $team->user_id }}}" />
+
 <div class="page-header">
-	<h1>{{{ $team->name }}}</h1>
+	<h1><input type="text" name="team[name]" value="{{{ $team->name }}}" placeholder="{{{ Lang::get('form_action.team_name_placeholder') }}}" class="form-control" /></h1>
 </div>
 
 <table class="table">
@@ -74,9 +77,13 @@ Register for {{ $title }}
 	</tbody>
 </table>
 
+<div class="form-group">
+	<button name="updateAction" type="submit" value="addemptyperson" class="btn btn-primary">{{{ Lang::get('form_action.add_person') }}}</button>
+</div>
+
 <input type="hidden" name="team_id" value="{{ $team->id }}" />
 <button name="updateAction" type="submit" value="save" class="btn btn-success">{{{ Lang::get('form_action.save') }}}</button>
-<button name="updateAction" type="submit" value="save_add" class="btn btn-primary">{{{ Lang::get('form_action.save_and_add_person') }}}</button>
+
 
 {{ Form::close() }}
 </div>

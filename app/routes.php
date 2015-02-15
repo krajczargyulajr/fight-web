@@ -12,25 +12,23 @@
 */
 
 
-Route::get('login', array('uses' => 'AuthController@showLogin'));
+Route::get('/', array('uses' => 'AuthController@showLogin'));
 Route::post('login', array('uses' => 'AuthController@doLogin'));
 
 Route::get('logout', array('uses' => 'AuthController@doLogout'));
 
-Route::group(["before" => "auth"], function() {
+Route::get('register', 'AuthController@showRegistration');
+Route::post('register', 'AuthController@doRegistration');
 
-	Route::get('/', function()
-	{
-		return Redirect::action('RegistrationController@show');
-	});
+// Registration
+
+Route::get('registration', 'RegistrationController@show');
+Route::post('registration', 'RegistrationController@update');
+
+Route::group(["before" => "auth"], function() {
 
 	// Admin
 	Route::get('admin', 'AdminController@home');
-
-	// Registration
-
-	Route::get('registration', 'RegistrationController@show');
-	Route::post('registration/save', 'RegistrationController@update');
 
 	// Deletion
 	Route::post('delete', 'DeleteController@confirmDelete');

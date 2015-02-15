@@ -3,7 +3,7 @@
 class UserBlockComposer {
 	public function compose($view)
 	{
-		$view->with('user', Auth::getUser());
+		$view->with('user', Auth::user());
 	}
 }
 

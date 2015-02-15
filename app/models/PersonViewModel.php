@@ -15,10 +15,69 @@ class PersonViewModel {
 
 	public $errors;
 
-	public function __construct(Person $person) {
+	public function __construct() {
 		$this->index = 0;
 		$this->eventRegistrations = [];
+	}
 
+	public static function getEmpty() {
+		return new PersonViewModel();
+	}
+
+	public static function fromPerson(Person $person) {
+		$pvm = new PersonViewModel();
+		$pvm->loadFromPerson($person);
+
+		return $pvm;
+	}
+
+	public static function fromInput($person) {
+		$pvm = new PersonViewModel();
+		$pvm->index = $person['index'];
+		$pvm->lastname = $person['lastname'];
+		$pvm->firstname = $person['firstname'];
+		$pvm->sex = $person['sex'];
+		$pvm->birthday = $person['birthday'];
+		$pvm->experience = $person['experience'];
+
+		foreach($person['eventreg'] as $eventId => $dontcare) {
+			$eventRegistrations[] = $eventId;
+		}
+
+		return $pvm;
+	}
+
+	public static function fromSession($person, $loadFromDb = false) {
+
+		Log::debug(print_r($person, true));
+
+		$pvm = new PersonViewModel();
+
+		if($loadFromDb) {
+			$pvm->loadFromPerson(Person::find($person['id']));
+		} else {
+			$pvm->id = $person['id'];
+		}
+
+		$pvm->lastname = $person['lastname'];
+		$pvm->firstname = $person['firstname'];
+		$pvm->sex = $person['sex'];
+		$pvm->birthday = $person['birthday'];
+		$pvm->experience = $person['experience'];
+
+		$pvm->index = $person['index'];
+
+		if(isset($person['eventreg'])) {
+			foreach($person['eventreg'] as $eventId => $dontcare) {
+				$pvm->eventRegistrations[] = $eventId;
+			}
+		}
+
+		return $pvm;
+
+	}
+
+	protected function loadFromPerson(Person $person) {
 		$this->id = $person->id;
 		$this->lastname = $person->lastname;
 		$this->firstname = $person->firstname;

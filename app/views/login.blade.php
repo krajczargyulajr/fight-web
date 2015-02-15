@@ -14,7 +14,7 @@
 	</div>
 
 	<div id="welcome_wrapper" class="col-md-6">
-		{{ Lang::get('site.welcome_text') }}
+		{{ Lang::get('site.welcome_text_1') }}
 
 		{{ Form::open(array('action' => 'RegistrationController@show', 'method' => 'get')) }}
 
@@ -25,7 +25,7 @@
 
 		{{ Form::close() }}
 
-		{{ Lang::get('site.competition_description') }}
+		<p>{{{ Lang::get('site.welcome_text_2') }}} {{ HTML::linkAction('AuthController@showRegistration', Lang::get('site.register.register_button')) }}
 	</div>
 
 	<div class="col-md-6">

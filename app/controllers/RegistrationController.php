@@ -8,46 +8,34 @@ class RegistrationController extends BaseController {
 
 		$events = CompetitionEvent::all()->sortBy('index');
 
-		$team = $this->getCurrentTeam();
+		$isNew = Input::get('new') == "true" ? true : false;
 
 		if($status == "validation_failed") {
-			
-			$session_people = Session::get('people');
-			$people = [];
-			foreach($session_people as $session_person) {
-				$person = new PersonViewModel(Person::find($session_person['id']));
-				$person->lastname = $session_person['lastname'];
-				$person->firstname = $session_person['firstname'];
-				$person->sex = $session_person['sex'];
-				$person->birthday = $session_person['birthday'];
-				$person->experience = $session_person['experience'];
+			$team = TeamViewModel::fromSession(Session::get('team'));
+			$people = $this->getSessionPeopleWithErrors();
 
-				$person->index = $session_person['index'];
+			return View::make('competition_registration.home')->with('title', "Bicske Kupa 2015")->with('events', $events)->with('team', $team)->with('people', $people);
 
-				$people[$person->index] = $person;
-			}
+		} else if($status == 'add_empty_person') {
+			Log::debug('[show] Adding empty person, not saving');
 
-			$errorBags = Session::get('errors')->getBags();
-			
-			foreach(Session::get('errors')->getBags() as $bag) {
-				foreach($bag->getMessages() as $field => $messages) {
-					$errorInfo = explode('.', $field);
+			$team = $this->getCurrentTeam();
+			$people = $this->getSessionPeople();
 
-					if($errorInfo[0] == "person") {
-						$index = $errorInfo[1];
-						$field = $errorInfo[2];
-
-						$people[$index]->addErrors($field, $messages);
-					}
-				}
-			}
+			$people[] = PersonViewModel::getEmpty();
 
 			return View::make('competition_registration.home')->with('title', "Bicske Kupa 2015")->with('events', $events)->with('team', $team)->with('people', $people);
 		}
 
+		$team = $this->getCurrentTeam();
 		$peopleVM = [];
-		foreach($team->people as $person) {
-			$peopleVM[] = new PersonViewModel($person);
+
+		if($isNew) {
+			$peopleVM[] = PersonViewModel::getEmpty();
+		} else {
+			foreach($team->people as $person) {
+				$peopleVM[] = PersonViewModel::fromPerson($person);
+			}
 		}
 
 		return View::make('competition_registration.home')->with('title', "Bicske Kupa 2015")->with('events', $events)->with('team', $team)->with('people', $peopleVM);
@@ -55,44 +43,107 @@ class RegistrationController extends BaseController {
 
 	public function update() {
 		
-		$team = $this->getCurrentTeam();
+		// people
+		$people = Input::has('people') ? Input::get('people') : [];
 
 		$updateAction = explode('_', Input::get('updateAction'));
 
-		if($updateAction[0] == 'deletePerson') {
+		Log::info('[update] Update action: '.$updateAction[0]);
+
+		if($updateAction[0] == 'addemptyperson') {
+			Log::info('[update] Adding empty person');
+
+			return Redirect::action('RegistrationController@show')->with('status', 'add_empty_person')->with('people', $people);
+		} else if($updateAction[0] == 'deletePerson') {
+			Log::info('[update] deleting person with id: '.$updateAction[1]);
+
 			return $this->deletePerson($updateAction[1]);
 		} else if($updateAction[0] == 'save') {
-			// authorization!!
-			// people
-			$people = Input::get('people');
+			
+			if(!Auth::check()) {
+				Log::debug('[update] Unauthenticated save, redirecting to registration');
 
+				$teamVM = Input::get('team');
+
+				// redirect to registration page
+				return Redirect::action('AuthController@showRegistration')->with('status', 'post_creation')->with('people', $people)->with('team', $teamVM);
+			}
+			
+			
+			// TODO: Make sure to check whether the saved team is the same as the allowed one
+			$team = $this->getCurrentTeam();
+			
+			$teamVM = TeamViewModel::fromInput(Input::get('team'));
+			$team->name = $teamVM->name;
+
+			$team->save();
+
+			Log::debug('[update] Validating save');
 			$validator = $this->validateInput();
 
 			if($validator->fails()) {
+				// TODO: send team in session as well
+				Log::debug('[update] Validation failed, redirecting to show with errors');
+
 				return Redirect::action('RegistrationController@show')->with('status', 'validation_failed')->with('people', $people)->withErrors($validator);
 			}
 			
 			foreach($people as $person) {
+				Log::debug('[update] Saving person...');
 				$dbId = $this->savePerson($person);
-
-				if(isset($person['eventreg'])) {
-					$this->updateEventRegistrations($dbId, $person['eventreg']);
-				}
-			}
-
-			if(isset($updateAction[1]) && $updateAction[1] == "add") {
-				$this->addPerson($team->id);
+				Log::debug('[update] Saved person with ID: '.$dbId);
 			}
 		}
 
 		return Redirect::action('RegistrationController@show');
 	}
 
+	public function saveSession($team, $people) {
+
+		$mockSession = array(
+			"team" => $team,
+			"people" => $people
+		);
+
+		$validator = $this->validateData($mockSession);
+
+		if($validator->fails()) {
+			Log::debug('[update] Session data validation failed, redirecting to show with errors');
+
+			return Redirect::action('RegistrationController@show')->with('status', 'validation_failed')->with('people', $people)->with('team', $team)->withErrors($validator);
+		}
+
+		// TODO: make sure that a new team is created ONLY if one doesn't exist for this user
+		Log::debug("Saving team");
+		Log::debug(print_r($team, true));
+
+		$teamDb = new Team();
+
+		$teamDb->name = $team['name'];
+		$teamDb->user_id = Auth::id();
+
+		$teamDb->save();
+
+		foreach($people as $person) {
+			$person['id'] = $this->addPerson($teamDb->id);
+			$this->savePerson($person);
+		}
+
+		return Redirect::action('RegistrationController@show');
+	}
+
 	private function validateInput() {
-		$rules = ['updateAction' => 'required'];
+		return $this->validateData(Input::all(), array('updateAction' => 'required'));
+	}
+
+	private function validateSession() {
+		return $this->validateData(Session::all());
+	}
+
+	private function validateData($source, $extraRules = array()) {
 
 		$personValidationRules = array(
-			'id' => 'required|Integer',
+			// 'id' => 'required|Integer',
 			'lastname' => 'required|alpha',
 			'firstname' => 'required|alpha',
 			'sex' =>'required|in:M,F',
@@ -101,7 +152,7 @@ class RegistrationController extends BaseController {
 		);
 
 		$personValidationMessages = [
-			'id.required' => "The id is required for a person",
+			// 'id.required' => "The id is required for a person",
 			'id.num' => "The id for a person must be a number",
 			'lastname.required' => "A person's last name is required",
 			'lastname.alpha' => "A person's last name must contain only letters",
@@ -116,14 +167,18 @@ class RegistrationController extends BaseController {
 			'experience.in' => "A person's experience must be Kezdo, Halado or Mester"
 		];
 
-		$validator = Validator::make(Input::all(), $rules);
-		$validator->iterate('person', $personValidationRules, $personValidationMessages);
+		$validator = Validator::make($source, $extraRules);
+		$validator->iterate('people', $personValidationRules, $personValidationMessages);
 
 		return $validator;
 	}
 
 	private function getCurrentTeam() {
-		return Team::where(array('user_id' => Auth::getUser()->id))->get()[0];
+		if(Auth::check()) {
+			return Team::where(array('user_id' => Auth::getUser()->id))->get()[0];
+		}
+		
+		return new Team();
 	}
 
 	private function addPerson($teamId) {
@@ -131,14 +186,17 @@ class RegistrationController extends BaseController {
 		$person->team_id = $teamId;
 
 		$person->save();
+
+		return $person->id;
 	}
 
 	private function savePerson($person) {
-		if(isset($person['id'])) {
-			$dbPerson = Person::find($person['id']);
+		if(!isset($person['id']) || $person['id'] == 0) {
+			$dbPerson = new Person();
+			$dbPerson->team_id = $this->getCurrentTeam()->id;
 		} else {
-			// error
-			throw new PersonNotFoundException();
+			Log::debug('[reg] Looking for person with ID: '.$person['id']);
+			$dbPerson = Person::find($person['id']);
 		}
 
 		// make sure that the person belongs to the proper team
@@ -156,6 +214,10 @@ class RegistrationController extends BaseController {
 		$dbPerson->experience = $person['experience'];
 
 		$dbPerson->save();
+
+		if(isset($person['eventreg'])) {
+			$this->updateEventRegistrations($dbPerson->id, $person['eventreg']);
+		}
 
 		return $dbPerson->id;
 	}
@@ -189,6 +251,72 @@ class RegistrationController extends BaseController {
 				$newReg->save();
 			}
 		}
+	}
+
+	public function sendRegistrationInitiationEmail() {
+		$email = Input::get('register_email');
+
+
+
+		return "email: $email";
+	}
+
+	protected function getSessionPeople($fromDb = false) {
+		$session_people = Session::get('people');
+
+		Log::debug("Got ".count($session_people)." people from session");
+
+		if(count($session_people) == 0) {
+			$session_people = [];
+		}
+
+		$people = [];
+
+		foreach($session_people as $session_person) {
+			// new person
+			Log::debug('Person ID: '.$session_person['id']);
+
+			if($session_person['id'] == 0) {
+				Log::debug('Found new person, preventing DB load');
+				$person = PersonViewModel::fromSession($session_person, false);
+			} else {
+				$person = PersonViewModel::fromSession($session_person, $fromDb);
+			}
+
+			$people[$person->index] = $person;
+		}
+
+		Log::debug("Created ".count($people)." person view models");
+
+		return $people;
+	}
+
+	protected function getSessionPeopleWithErrors() {
+		Log::debug('Loading people from session with errors');
+
+		$people = $this->getSessionPeople(false);
+
+		$errorBags = Session::get('errors')->getBags();
+		
+		Log::debug('Error bags: ');
+		Log::debug(print_r($errorBags, true));
+
+		foreach($errorBags as $bag) {
+			foreach($bag->getMessages() as $field => $messages) {
+				$errorInfo = explode('.', $field);
+
+				if($errorInfo[0] == "people") {
+					$index = $errorInfo[1];
+					$field = $errorInfo[2];
+
+					Log::debug('Adding person error info for index: '.$index);
+
+					$people[$index]->addErrors($field, $messages);
+				}
+			}
+		}
+
+		return $people;
 	}
 
 }
